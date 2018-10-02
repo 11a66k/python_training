@@ -14,21 +14,23 @@ class UntitledTestCase(unittest.TestCase):
         self.wd.implicitly_wait(30)
 
     
-    def test_untitled_test_case(self):
-        wb = self.wd
-        self.login(wb, usermane="admin", password="secret")
-        self.create_new_contact(wb)
-        self.fill_contact_form(wb, Contact(first_name="rick", last_name="mortiy", address="USA", phone_home="+1000000", email="123@32.32"))
-        self.submin_form(wb)
-        self.logout(wb)
+    def test_add_contact(self):
+        self.login(usermane="admin", password="secret")
+        self.create_new_contact()
+        self.fill_contact_form(Contact(first_name="rick", last_name="mortiy", address="USA", phone_home="+1000000", email="123@32.32"))
+        self.submin_form()
+        self.logout()
 
-    def logout(self, wb):
+    def logout(self):
+        wb = self.wd
         wb.find_element_by_link_text("Logout").click()
 
-    def submin_form(self, wb):
+    def submin_form(self):
+        wb = self.wd
         wb.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def fill_contact_form(self, wb, contact):
+    def fill_contact_form(self, contact):
+        wb = self.wd
         wb.find_element_by_name("firstname").click()
         wb.find_element_by_name("firstname").clear()
         wb.find_element_by_name("firstname").send_keys(contact.first_name)
@@ -45,11 +47,13 @@ class UntitledTestCase(unittest.TestCase):
         wb.find_element_by_name("email").clear()
         wb.find_element_by_name("email").send_keys(contact.email)
 
-    def create_new_contact(self, wb):
+    def create_new_contact(self):
+        wb = self.wd
         wb.find_element_by_link_text("add new").click()
 
-    def login(self, wb, usermane, password):
-        self.open_page(wb)
+    def login(self, usermane, password):
+        wb = self.wd
+        self.open_page()
         wb.find_element_by_name("user").send_keys(usermane)
         wb.find_element_by_xpath("//form[@id='LoginForm']/label[2]").click()
         wb.find_element_by_name("pass").click()
@@ -57,7 +61,8 @@ class UntitledTestCase(unittest.TestCase):
         wb.find_element_by_name("pass").send_keys(password)
         wb.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_page(self, wb):
+    def open_page(self):
+        wb = self.wd
         wb.get("http://localhost/addressbook/index.php")
 
     def is_element_present(self, how, what):
