@@ -13,9 +13,9 @@ def app(request):
 
 def test_add_contact(app):
     app.session.login(username="admin", password="secret")
-    app.create_new_contact()
-    app.fill_contact_form(Contact(first_name="rick", last_name="mortiy", address="USA", phone_home="+1000000", email="123@32.32"))
-    app.submin_form()
+    app.contact.create_new()
+    app.contact.fill_form(Contact(first_name="rick", last_name="mortiy", address="USA", phone_home="+1000000", email="123@32.32"))
+    app.contact.submin_form()
     app.session.logout()
 
 
