@@ -16,7 +16,6 @@ class UntitledTestCase(unittest.TestCase):
     
     def test_untitled_test_case(self):
         wb = self.wd
-        self.open_page(wb)
         self.login(wb, usermane="admin", password="secret")
         self.create_new_contact(wb)
         self.fill_contact_form(wb, Contact(first_name="rick", last_name="mortiy", address="USA", phone_home="+1000000", email="123@32.32"))
@@ -50,6 +49,7 @@ class UntitledTestCase(unittest.TestCase):
         wb.find_element_by_link_text("add new").click()
 
     def login(self, wb, usermane, password):
+        self.open_page(wb)
         wb.find_element_by_name("user").send_keys(usermane)
         wb.find_element_by_xpath("//form[@id='LoginForm']/label[2]").click()
         wb.find_element_by_name("pass").click()

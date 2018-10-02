@@ -16,25 +16,19 @@ class UntitledTestCase(unittest.TestCase):
 
     def test_add_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
         self.init_group_creation(wd)
         self.fiil_group_form(wd, Group(name="222", header="1111", footer="2222"))
         self.sumbit_group_creation(wd)
-        self.return_to_group_page(wd)
         self.logout(wd)
 
 
     def test_case_add_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
         self.init_group_creation(wd)
         self.fiil_group_form(wd, Group(name="", header="", footer=""))
         self.sumbit_group_creation(wd)
-        self.return_to_group_page(wd)
         self.logout(wd)
 
 
@@ -46,6 +40,8 @@ class UntitledTestCase(unittest.TestCase):
 
     def sumbit_group_creation(self, wd):
         wd.find_element_by_name("submit").click()
+        self.return_to_group_page(wd)
+
 
     def fiil_group_form(self, wd, group):
         # fill group form
@@ -60,13 +56,14 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.footer)
 
     def init_group_creation(self, wd):
+        self.open_groups_page(wd)
         wd.find_element_by_name("new").click()
 
     def open_groups_page(self, wd):
         wd.find_element_by_link_text("groups").click()
 
     def login(self, wd, username, password):
-
+        self.open_home_page(wd)
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_id("LoginForm").click()
