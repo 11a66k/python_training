@@ -16,18 +16,18 @@ def app(request):
 
 
 def test_add_group(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.init_group_creation()
     app.fiil_group_form(Group(name="222", header="1111", footer="2222"))
     app.sumbit_group_creation()
-    app.logout()
+    app.session.logout()
 
 
 def test_case_add_empty_group(app):
-    app.login( username="admin", password="secret")
+    app.session.login( username="admin", password="secret")
     app.init_group_creation()
     app.fiil_group_form( Group(name="", header="", footer=""))
-    app.logout()
+    app.session.logout()
 
 
 

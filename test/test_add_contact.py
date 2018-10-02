@@ -12,11 +12,11 @@ def app(request):
 
 
 def test_add_contact(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_new_contact()
     app.fill_contact_form(Contact(first_name="rick", last_name="mortiy", address="USA", phone_home="+1000000", email="123@32.32"))
     app.submin_form()
-    app.logout()
+    app.session.logout()
 
 
 if __name__ == "__main__":
