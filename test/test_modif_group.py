@@ -2,9 +2,13 @@
 from model.group import Group
 
 
-def test_modif_group(app):
+def test_modif_group_name(app):
     app.session.login(username="admin", password="secret")
-    app.group.modif_first_group()
-    app.group.fiil_form(Group(name="aaa", header="sss", footer="ddd"))
-    app.group.sumbit_modif()
+    app.group.modif_first_group(Group(name="neeee"))
+    app.session.logout()
+
+
+def test_modif_group_header(app):
+    app.session.login(username="admin", password="secret")
+    app.group.modif_first_group(Group(header="sss"))
     app.session.logout()
