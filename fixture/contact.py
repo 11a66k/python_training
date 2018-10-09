@@ -31,14 +31,25 @@ class ContactHelper:
 
     def delete_first(self):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
+
     def modif_first_first_name(self, new_contact):
         wd = self.app.wd
+        self.open_home_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact_form(new_contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+
+
+
+
+    def open_home_page(self):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
+
 
