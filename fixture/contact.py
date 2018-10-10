@@ -3,10 +3,6 @@ class ContactHelper:
         self.app = app
 
 
-    def submin_form(self):
-        wd = self.app.wd
-        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-
     def fill_form(self, contact):
         self.fill_contact_form(contact)
 
@@ -25,9 +21,11 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def create_new(self):
+    def create_new(self, contact):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+        self.fill_contact_form(contact)
+        wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
     def delete_first(self):
         wd = self.app.wd
