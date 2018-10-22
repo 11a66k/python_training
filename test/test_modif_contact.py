@@ -11,5 +11,3 @@ def test_modif_last_name(app):
     if app.contact.count() == 0:
         app.contact.create_new(Contact(last_name="test"))
     app.contact.modif_first_first_name(Contact(last_name="Pye"))
-
-
