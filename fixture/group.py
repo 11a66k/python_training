@@ -41,24 +41,33 @@ class GroupHelper:
         if not (wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0):
             wd.find_element_by_link_text("groups").click()
 
-    def delete_first_group(self):
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_firsrt_group()
+        self.select_group_by_index(index)
         wd.find_element_by_name("delete").click()
         self.return_to_page()
         self.group_cache = None
+
+    def delete_first_group(self):
+        self.delete_group_by_index(0)
+
 
 
     def select_firsrt_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
-    def modif_first_group(self, new_group_data):
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+
+    def modif_group_by_index(self, index, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
         #open modification form
-        self.select_firsrt_group()
+        self.select_group_by_index(index)
         wd.find_element_by_name("edit").click()
         #fill group form
         self.fill_group_form(new_group_data)
@@ -66,6 +75,9 @@ class GroupHelper:
         #submit modification
         self.return_to_page()
         self.group_cache = None
+
+    def modif_first_group(self, new_group_data):
+        self.modif_group_by_index(0)
 
 
     def sumbit_modif(self):
