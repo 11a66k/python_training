@@ -18,6 +18,8 @@ class ContactHelper:
         self.change_field_valuee("mobile", contact.phone_mobile)
         self.change_field_valuee("work", contact.phone_work)
         self.change_field_valuee("email", contact.email)
+        self.change_field_valuee("email2", contact.email2)
+        self.change_field_valuee("email3", contact.email3)
 
 
     def change_field_valuee(self, field_name, text):
@@ -93,9 +95,10 @@ class ContactHelper:
                 last_name = cell_list[1].text
                 first_name = cell_list[2].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
+                all_emails = cell_list[4].text
                 all_phones = cell_list[5].text
                 self.contact_cache.append(Contact(last_name=last_name, first_name=first_name, id=id,
-                                                  all_phones_home_page=all_phones,
+                                                  all_phones_home_page=all_phones, all_emails_home_page=all_emails
                                                   ))
         return list(self.contact_cache)
 
@@ -122,8 +125,11 @@ class ContactHelper:
         phone_home = wd.find_element_by_name("home").get_attribute("value")
         phone_mobile = wd.find_element_by_name("mobile").get_attribute("value")
         phone_work = wd.find_element_by_name("work").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
         return Contact(first_name=first_name, last_name=last_name,id=id, phone_home=phone_home,
-                       phone_mobile=phone_mobile, phone_work=phone_work)
+                       phone_mobile=phone_mobile, phone_work=phone_work, email=email,  email2=email2, email3=email3)
 
     def get_contact_view_page(self, index):
         wd = self.app.wd
@@ -132,8 +138,9 @@ class ContactHelper:
         phone_home = re.search("H: (.*)", text).group(1)
         phone_mobile = re.search("M: (.*)", text).group(1)
         phone_work = re.search("W: (.*)", text).group(1)
+        all_emails = wd.find_elements_by_css_selector('a[href*="mailto:email"]')
         return Contact(phone_home=phone_home,
-                       phone_mobile=phone_mobile, phone_work=phone_work)
+                       phone_mobile=phone_mobile, phone_work=phone_work, all_emails_from_view_page=all_emails)
 
 
 
