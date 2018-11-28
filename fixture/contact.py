@@ -54,6 +54,17 @@ class ContactHelper:
 
 
 
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        self.open_home_page()
+        self.contact_cache = None
+
+
+
 
     def modif_first_first_name(self, new_contact):
         self.modif_contact_by_index(0)
@@ -63,11 +74,26 @@ class ContactHelper:
     def modif_contact_by_index(self, index, new_contact):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_elements_by_name("selected[]")[index].click()
+        # wd.find_elements_by_name("selected[]")[index].click()
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(new_contact)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         # self.open_home_page()
+        self.contact_cache = None
+
+
+
+
+    def modif_contact_by_id(self, id, new_contact):
+        wd = self.app.wd
+        self.open_home_page()
+        # init contact modification
+        # wd.find_element_by_xpath('//a[@href="view.php?id=%s"]' % id).click()
+        wd.find_element_by_xpath("//a[contains(@href,'%s')]/img[@title='Edit']" % id).click()
+        # fill contact form
+        self.fill_contact_form(new_contact)
+        wd.find_element_by_name("update").click()
+        self.open_home_page()
         self.contact_cache = None
 
 
@@ -110,11 +136,11 @@ class ContactHelper:
         cells.find_element_by_tag_name("a").click()
 
     def open_contact_view_by_index(self, index):
-            wd = self.app.wd
-            self.open_home_page()
-            row = wd.find_elements_by_name("entry")[index]
-            cells = row.find_elements_by_tag_name("td")[6]
-            cells.find_element_by_tag_name("a").click()
+        wd = self.app.wd
+        self.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cells = row.find_elements_by_tag_name("td")[6]
+        cells.find_element_by_tag_name("a").click()
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
